@@ -138,6 +138,14 @@ export const dtcgParser: ParserPlugin = {
         if (value.letterSpacing) typoToken.letterSpacing = String(value.letterSpacing);
         typography[buildTokenName(path, 'typography')] = typoToken;
 
+      } else if (token.type === 'fontFamily') {
+        const value = typeof token.value === 'string' && token.value.startsWith('{')
+          ? String(resolveAlias(token.value, rawValues))
+          : String(token.value);
+        const name = buildTokenName(path, 'typography');
+        if (!typography[name]) typography[name] = {};
+        typography[name].fontFamily = value;
+
       } else {
         console.warn(`Skipped ${path}: unsupported type "${token.type}"`);
       }

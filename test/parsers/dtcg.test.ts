@@ -86,4 +86,10 @@ describe('nested DTCG tokens', () => {
     expect(result.spacing).not.toHaveProperty('sm', '4px');
     expect(result.spacing).not.toHaveProperty('lg', '9999px');
   });
+
+  it('maps fontFamily tokens to typography entries', () => {
+    const result = dtcgParser.parse(NESTED_FIXTURE);
+    expect(result.typography?.['display']).toEqual({ fontFamily: 'Roboto' });
+    expect(result.typography?.['body']).toEqual({ fontFamily: 'Inter' });
+  });
 });
