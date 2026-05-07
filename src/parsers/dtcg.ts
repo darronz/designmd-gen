@@ -29,6 +29,10 @@ function buildTokenName(tokenPath: string, section: string): string {
   return filtered.join('-');
 }
 
+function hasAncestor(groupPath: string[], names: Set<string>): boolean {
+  return groupPath.some(s => names.has(s));
+}
+
 function isToken(obj: unknown): obj is { $value: unknown; $type?: string } {
   return typeof obj === 'object' && obj !== null && '$value' in obj;
 }
@@ -101,8 +105,6 @@ export const dtcgParser: ParserPlugin = {
     const rounded: Record<string, string> = {};
 
     for (const [path, token] of flatTokens) {
-      const topGroup = token.groupPath[0] ?? '';
-
       if (token.type === 'color') {
         let value = token.value;
         if (typeof value === 'string' && value.startsWith('{')) {
@@ -116,7 +118,7 @@ export const dtcgParser: ParserPlugin = {
           ? String(resolveAlias(token.value, rawValues))
           : String(token.value);
 
-        if (ROUNDED_GROUP_NAMES.has(topGroup)) {
+        if (hasAncestor(token.groupPath, ROUNDED_GROUP_NAMES)) {
           rounded[buildTokenName(path, 'rounded')] = value;
         } else {
           spacing[buildTokenName(path, 'spacing')] = value;

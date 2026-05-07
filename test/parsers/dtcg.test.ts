@@ -75,4 +75,15 @@ describe('nested DTCG tokens', () => {
     expect(result.spacing?.['sm']).toBe('8px');
     expect(result.spacing?.['md']).toBe('16px');
   });
+
+  it('routes nested radius tokens to rounded', () => {
+    const result = dtcgParser.parse(NESTED_FIXTURE);
+    expect(result.rounded).toEqual({ sm: '4px', lg: '9999px' });
+  });
+
+  it('does not put radius tokens in spacing', () => {
+    const result = dtcgParser.parse(NESTED_FIXTURE);
+    expect(result.spacing).not.toHaveProperty('sm', '4px');
+    expect(result.spacing).not.toHaveProperty('lg', '9999px');
+  });
 });
