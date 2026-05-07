@@ -1,5 +1,7 @@
 # designmd-gen
 
+[![npm version](https://img.shields.io/npm/v/@darronz/designmd-gen)](https://www.npmjs.com/package/@darronz/designmd-gen)
+
 Export a [DESIGN.md](https://github.com/nicholasgasior/design.md) file from your existing design tokens. Takes CSS custom properties, W3C DTCG JSON, Tailwind configs, or Style Dictionary JSON and produces the YAML frontmatter format that DESIGN.md expects.
 
 ## Install
