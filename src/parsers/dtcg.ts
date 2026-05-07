@@ -130,9 +130,9 @@ export const dtcgParser: ParserPlugin = {
         if (hasAncestor(token.groupPath, ROUNDED_GROUP_NAMES)) {
           rounded[buildTokenName(path, 'rounded')] = value;
         } else if (hasAncestor(token.groupPath, TYPOGRAPHY_GROUP_NAMES)) {
-          const name = buildTokenName(path, 'typography');
-          if (!typography[name]) typography[name] = {};
-          typography[name].fontSize = value;
+          const typoName = buildTokenName(path, 'typography');
+          if (!typography[typoName]) typography[typoName] = {};
+          typography[typoName].fontSize = value;
         } else if (hasAncestor(token.groupPath, COMPONENT_GROUP_NAMES)) {
           const compIdx = token.groupPath.findIndex(s => COMPONENT_GROUP_NAMES.has(s));
           if (compIdx + 1 < token.groupPath.length) {
@@ -141,6 +141,8 @@ export const dtcgParser: ParserPlugin = {
             const propName = remaining.join('-');
             if (!components[componentName]) components[componentName] = {};
             components[componentName][propName] = value;
+          } else {
+            spacing[buildTokenName(path, 'spacing')] = value;
           }
         } else {
           spacing[buildTokenName(path, 'spacing')] = value;
@@ -164,9 +166,9 @@ export const dtcgParser: ParserPlugin = {
         const value = typeof token.value === 'string' && token.value.startsWith('{')
           ? String(resolveAlias(token.value, rawValues))
           : String(token.value);
-        const name = buildTokenName(path, 'typography');
-        if (!typography[name]) typography[name] = {};
-        typography[name].fontFamily = value;
+        const typoName = buildTokenName(path, 'typography');
+        if (!typography[typoName]) typography[typoName] = {};
+        typography[typoName].fontFamily = value;
 
       } else {
         console.warn(`Skipped ${path}: unsupported type "${token.type}"`);
