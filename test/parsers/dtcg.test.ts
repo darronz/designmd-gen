@@ -3,6 +3,7 @@ import { resolve } from 'node:path';
 import { dtcgParser } from '../../src/parsers/dtcg.js';
 
 const FIXTURE = resolve(import.meta.dirname, '../fixtures/dtcg-tokens.json');
+const NESTED_FIXTURE = resolve(import.meta.dirname, '../fixtures/dtcg-nested-tokens.json');
 
 describe('dtcgParser', () => {
   it('has correct metadata', () => {
@@ -52,5 +53,26 @@ describe('dtcgParser', () => {
   it('uses name from JSON if present', () => {
     const result = dtcgParser.parse(FIXTURE);
     expect(result.name).toBe('DTCG Test System');
+  });
+});
+
+describe('nested DTCG tokens', () => {
+  it('strips organizational and type-category groups from color names', () => {
+    const result = dtcgParser.parse(NESTED_FIXTURE);
+    expect(result.colors?.['brand-primary']).toBe('#1a1c1e');
+    expect(result.colors?.['neutral-50']).toBe('#f9fafb');
+    expect(result.colors?.['neutral-900']).toBe('#111827');
+    expect(result.colors?.['actionHover']).toBe('#1654dc');
+  });
+
+  it('resolves aliases in nested structures', () => {
+    const result = dtcgParser.parse(NESTED_FIXTURE);
+    expect(result.colors?.['primary']).toBe('#1a1c1e');
+  });
+
+  it('strips organizational groups from spacing names', () => {
+    const result = dtcgParser.parse(NESTED_FIXTURE);
+    expect(result.spacing?.['sm']).toBe('8px');
+    expect(result.spacing?.['md']).toBe('16px');
   });
 });

@@ -7,6 +7,28 @@ const ROUNDED_GROUP_NAMES = new Set([
   'radius', 'rounded', 'border-radius', 'borderRadius', 'radii',
 ]);
 
+const ORGANIZATIONAL_GROUPS = new Set([
+  'reference', 'system', 'component', 'primitive', 'semantic', 'alias', 'base',
+]);
+
+const TYPE_CATEGORY_GROUPS: Record<string, Set<string>> = {
+  colors: new Set(['palette', 'color', 'colors']),
+  spacing: new Set(['spacing', 'space']),
+  rounded: ROUNDED_GROUP_NAMES,
+  typography: new Set(['typography', 'font', 'type', 'fontFamily']),
+};
+
+function buildTokenName(tokenPath: string, section: string): string {
+  const segments = tokenPath.split('.');
+  const leaf = segments.pop()!;
+  const categoryGroups = TYPE_CATEGORY_GROUPS[section] ?? new Set<string>();
+  const filtered = segments.filter(
+    s => !ORGANIZATIONAL_GROUPS.has(s) && !categoryGroups.has(s),
+  );
+  filtered.push(leaf);
+  return filtered.join('-');
+}
+
 function isToken(obj: unknown): obj is { $value: unknown; $type?: string } {
   return typeof obj === 'object' && obj !== null && '$value' in obj;
 }
@@ -79,7 +101,6 @@ export const dtcgParser: ParserPlugin = {
     const rounded: Record<string, string> = {};
 
     for (const [path, token] of flatTokens) {
-      const tokenName = path.split('.').pop()!;
       const topGroup = token.groupPath[0] ?? '';
 
       if (token.type === 'color') {
@@ -88,7 +109,7 @@ export const dtcgParser: ParserPlugin = {
           value = resolveAlias(value, rawValues);
         }
         const hex = normalizeColor(String(value));
-        if (hex) colors[tokenName] = hex;
+        if (hex) colors[buildTokenName(path, 'colors')] = hex;
 
       } else if (token.type === 'dimension') {
         const value = typeof token.value === 'string' && token.value.startsWith('{')
@@ -96,9 +117,9 @@ export const dtcgParser: ParserPlugin = {
           : String(token.value);
 
         if (ROUNDED_GROUP_NAMES.has(topGroup)) {
-          rounded[tokenName] = value;
+          rounded[buildTokenName(path, 'rounded')] = value;
         } else {
-          spacing[tokenName] = value;
+          spacing[buildTokenName(path, 'spacing')] = value;
         }
 
       } else if (token.type === 'typography') {
@@ -113,7 +134,7 @@ export const dtcgParser: ParserPlugin = {
             : String(value.lineHeight);
         }
         if (value.letterSpacing) typoToken.letterSpacing = String(value.letterSpacing);
-        typography[tokenName] = typoToken;
+        typography[buildTokenName(path, 'typography')] = typoToken;
 
       } else {
         console.warn(`Skipped ${path}: unsupported type "${token.type}"`);
