@@ -104,4 +104,20 @@ describe('nested DTCG tokens', () => {
     expect(result.spacing).not.toHaveProperty('sizes-base');
     expect(result.spacing).not.toHaveProperty('sizes-lg');
   });
+
+  it('routes component-ancestor dimensions to components section', () => {
+    const result = dtcgParser.parse(NESTED_FIXTURE);
+    expect(result.components?.['button']).toEqual({
+      height: '56px',
+      padding: '18px',
+    });
+    expect(result.components?.['form']).toEqual({
+      inputHeight: '48px',
+    });
+  });
+
+  it('keeps component-ancestor colors in the colors section', () => {
+    const result = dtcgParser.parse(NESTED_FIXTURE);
+    expect(result.colors?.['form-borderColor']).toBe('#111827');
+  });
 });

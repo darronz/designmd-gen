@@ -11,6 +11,10 @@ const TYPOGRAPHY_GROUP_NAMES = new Set([
   'typography', 'font', 'type',
 ]);
 
+const COMPONENT_GROUP_NAMES = new Set([
+  'component', 'components', 'governors',
+]);
+
 const ORGANIZATIONAL_GROUPS = new Set([
   'reference', 'system', 'component', 'primitive', 'semantic', 'alias', 'base',
 ]);
@@ -107,6 +111,7 @@ export const dtcgParser: ParserPlugin = {
     const typography: Record<string, TypographyToken> = {};
     const spacing: Record<string, string> = {};
     const rounded: Record<string, string> = {};
+    const components: Record<string, Record<string, string>> = {};
 
     for (const [path, token] of flatTokens) {
       if (token.type === 'color') {
@@ -128,6 +133,15 @@ export const dtcgParser: ParserPlugin = {
           const name = buildTokenName(path, 'typography');
           if (!typography[name]) typography[name] = {};
           typography[name].fontSize = value;
+        } else if (hasAncestor(token.groupPath, COMPONENT_GROUP_NAMES)) {
+          const compIdx = token.groupPath.findIndex(s => COMPONENT_GROUP_NAMES.has(s));
+          if (compIdx + 1 < token.groupPath.length) {
+            const componentName = token.groupPath[compIdx + 1];
+            const remaining = [...token.groupPath.slice(compIdx + 2), path.split('.').pop()!];
+            const propName = remaining.join('-');
+            if (!components[componentName]) components[componentName] = {};
+            components[componentName][propName] = value;
+          }
         } else {
           spacing[buildTokenName(path, 'spacing')] = value;
         }
@@ -164,6 +178,7 @@ export const dtcgParser: ParserPlugin = {
     if (Object.keys(typography).length > 0) result.typography = typography;
     if (Object.keys(spacing).length > 0) result.spacing = spacing;
     if (Object.keys(rounded).length > 0) result.rounded = rounded;
+    if (Object.keys(components).length > 0) result.components = components;
     return result;
   },
 };
