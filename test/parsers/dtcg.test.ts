@@ -92,4 +92,16 @@ describe('nested DTCG tokens', () => {
     expect(result.typography?.['display']).toEqual({ fontFamily: 'Roboto' });
     expect(result.typography?.['body']).toEqual({ fontFamily: 'Inter' });
   });
+
+  it('routes dimension tokens under typography groups as fontSize', () => {
+    const result = dtcgParser.parse(NESTED_FIXTURE);
+    expect(result.typography?.['sizes-base']).toEqual({ fontSize: '16px' });
+    expect(result.typography?.['sizes-lg']).toEqual({ fontSize: '1.5rem' });
+  });
+
+  it('does not put typography dimensions in spacing', () => {
+    const result = dtcgParser.parse(NESTED_FIXTURE);
+    expect(result.spacing).not.toHaveProperty('sizes-base');
+    expect(result.spacing).not.toHaveProperty('sizes-lg');
+  });
 });

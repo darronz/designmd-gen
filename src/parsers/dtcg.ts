@@ -7,6 +7,10 @@ const ROUNDED_GROUP_NAMES = new Set([
   'radius', 'rounded', 'border-radius', 'borderRadius', 'radii',
 ]);
 
+const TYPOGRAPHY_GROUP_NAMES = new Set([
+  'typography', 'font', 'type',
+]);
+
 const ORGANIZATIONAL_GROUPS = new Set([
   'reference', 'system', 'component', 'primitive', 'semantic', 'alias', 'base',
 ]);
@@ -120,6 +124,10 @@ export const dtcgParser: ParserPlugin = {
 
         if (hasAncestor(token.groupPath, ROUNDED_GROUP_NAMES)) {
           rounded[buildTokenName(path, 'rounded')] = value;
+        } else if (hasAncestor(token.groupPath, TYPOGRAPHY_GROUP_NAMES)) {
+          const name = buildTokenName(path, 'typography');
+          if (!typography[name]) typography[name] = {};
+          typography[name].fontSize = value;
         } else {
           spacing[buildTokenName(path, 'spacing')] = value;
         }
