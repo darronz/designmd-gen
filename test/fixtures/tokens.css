@@ -1,0 +1,20 @@
+:root {
+  --color-primary: #1A1C1E;
+  --color-secondary: rgb(108, 114, 120);
+  --color-accent: red;
+
+  --font-heading-family: 'Public Sans';
+  --font-heading-size: 3rem;
+  --font-heading-weight: 700;
+  --font-body-family: 'Inter';
+  --font-body-size: 1rem;
+
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+
+  --unmapped-var: something;
+  --color-dynamic: var(--other);
+}

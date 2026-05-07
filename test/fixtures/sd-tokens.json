@@ -1,0 +1,25 @@
+{
+  "name": "SD Test System",
+  "color": {
+    "primary": { "value": "#1A1C1E", "type": "color" },
+    "secondary": { "value": "#6C7278", "type": "color" }
+  },
+  "spacing": {
+    "sm": { "value": "8px", "type": "dimension" },
+    "md": { "value": "16px", "type": "dimension" }
+  },
+  "border-radius": {
+    "sm": { "value": "4px", "type": "dimension" },
+    "md": { "value": "8px", "type": "dimension" }
+  },
+  "typography": {
+    "heading": {
+      "type": "typography",
+      "value": {
+        "fontFamily": "Public Sans",
+        "fontSize": "3rem",
+        "fontWeight": 700
+      }
+    }
+  }
+}

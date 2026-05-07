@@ -1,0 +1,37 @@
+{
+  "name": "DTCG Test System",
+  "color": {
+    "$type": "color",
+    "primary": { "$value": "#1A1C1E" },
+    "secondary": { "$value": "#6C7278" },
+    "alias": { "$value": "{color.primary}" }
+  },
+  "spacing": {
+    "$type": "dimension",
+    "sm": { "$value": "8px" },
+    "md": { "$value": "16px" }
+  },
+  "border-radius": {
+    "$type": "dimension",
+    "sm": { "$value": "4px" },
+    "md": { "$value": "8px" }
+  },
+  "typography": {
+    "heading": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Public Sans",
+        "fontSize": "3rem",
+        "fontWeight": 700,
+        "lineHeight": 1.2
+      }
+    },
+    "body": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Inter",
+        "fontSize": "1rem"
+      }
+    }
+  }
+}
