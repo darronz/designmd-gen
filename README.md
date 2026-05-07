@@ -129,7 +129,7 @@ These work out of the box for projects that follow their expected naming convent
 | Parser | Detects | What it maps |
 |--------|---------|--------------|
 | `css` | `.css` files | `--color-*` to colors, `--font-{group}-{prop}` to typography, `--spacing-*` to spacing, `--radius-*` to rounded |
-| `dtcg` | `.json` with `$value` keys | W3C Design Token Community Group format. Resolves aliases. |
+| `dtcg` | `.json` with `$value` keys | W3C DTCG format. `color` to colors, `dimension` to spacing/rounded/typography (by ancestor group), `typography` and `fontFamily` to typography, component-tier dimensions to components. Resolves aliases and nested three-tier structures (reference/system/component). |
 | `style-dictionary` | `.json` with `value` keys (no `$` prefix) | Style Dictionary's older `value`/`type` format |
 | `tailwind` | `tailwind.config.*` | `theme.colors`, `theme.fontSize`, `theme.fontFamily`, `theme.spacing`, `theme.borderRadius` |
 
