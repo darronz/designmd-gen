@@ -38,6 +38,16 @@
   "engines": {
     "node": ">=20"
   },
+  "keywords": [
+    "design-tokens",
+    "design-md",
+    "css-custom-properties",
+    "tailwind",
+    "style-dictionary",
+    "dtcg",
+    "yaml",
+    "design-system"
+  ],
   "license": "MIT",
   "publishConfig": {
     "access": "public"
