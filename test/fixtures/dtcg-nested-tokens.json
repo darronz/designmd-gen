@@ -1,0 +1,50 @@
+{
+  "name": "Nested DTCG Test",
+  "reference": {
+    "palette": {
+      "brand": {
+        "primary": { "$value": "#1a1c1e", "$type": "color" }
+      },
+      "neutral": {
+        "50": { "$value": "#f9fafb", "$type": "color" },
+        "900": { "$value": "#111827", "$type": "color" }
+      }
+    },
+    "spacing": {
+      "sm": { "$value": "8px", "$type": "dimension" },
+      "md": { "$value": "16px", "$type": "dimension" }
+    },
+    "radius": {
+      "sm": { "$value": "4px", "$type": "dimension" },
+      "lg": { "$value": "9999px", "$type": "dimension" }
+    },
+    "typography": {
+      "fontFamily": {
+        "display": { "$value": "Roboto", "$type": "fontFamily" },
+        "body": { "$value": "Inter", "$type": "fontFamily" }
+      },
+      "sizes": {
+        "base": { "$value": "16px", "$type": "dimension" },
+        "lg": { "$value": "1.5rem", "$type": "dimension" }
+      }
+    }
+  },
+  "system": {
+    "color": {
+      "primary": { "$value": "{reference.palette.brand.primary}", "$type": "color" },
+      "actionHover": { "$value": "#1654dc", "$type": "color" }
+    },
+    "governors": {
+      "button": {
+        "height": { "$value": "56px", "$type": "dimension" },
+        "padding": { "$value": "18px", "$type": "dimension" }
+      }
+    }
+  },
+  "component": {
+    "form": {
+      "inputHeight": { "$value": "48px", "$type": "dimension" },
+      "borderColor": { "$value": "{reference.palette.neutral.900}", "$type": "color" }
+    }
+  }
+}
